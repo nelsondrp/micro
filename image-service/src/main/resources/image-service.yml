@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: image-service
+
+### DATABASE ###
+  datasource:
+    platafor: h2
+    url: jdbc:h2:mem:dev
+    username: sa
+    password: 
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-plataform: org.hibernate.dialect.H2Dialect
+  h2:
+    console.enabled: true
+    console.path: /h2
+
+### MULTIPART FILE ###
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+### IMAGE STORAGE ###
+storage:
+  relative-location: "../image-store"
+  max-files-per-level: 2
+  max-levels-per-layer: 2
+
+## SERVICE REGISTRY ###
+# eureka:
+#   instance:
+#     client:
+#       registerWithEureka: true
+#       fetchRegistry: true
+#     serviceUrl:
+#       defaultZone: http://localhost:8001/eureka
+
+### SERVER ###
+server:
+  port:
+    8050
+  servlet:
+    context-path: /v1
+
+### ACTUATOR ###
+management:
+  endpoints:
+    jmx.exposure.include: "*"
+    web.exposure.include: "*"
+  security.enabled: false
+
+

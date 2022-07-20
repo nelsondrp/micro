@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: replicants-registry-service
+
+### DATABASE ###
+  datasource:
+    plataform: h2
+    url: jdbc:h2:mem:dev
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-plataform: org.hibernate.dialect.H2Dialect
+  h2:
+    console.enabled: true
+    console.path: /h2
+
+### SERVER ###
+server:
+  port:
+    8005
+  servlet:
+    context-path: /v1
+
+## SERVICE REGISTRY ###
+eureka:
+  instance:
+    client:
+      registerWithEureka: true
+      fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8001/eureka
+
+### ACTUATOR ###
+management:
+  endpoints:
+    jmx.exposure.include: "*"
+    web.exposure.include: "*"
+  security.enabled: false
+
+

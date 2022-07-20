@@ -14,6 +14,6 @@
 [ ] Occurrence service <br>
 [ ] Automated service for factory production <br>
 [ ] Middleware services <br>
-[ ] Message Broker
-[ ] Documentation
+[ ] Message Broker <br>
+[ ] Documentation <br>
 [ ] Tests

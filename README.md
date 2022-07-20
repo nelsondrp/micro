@@ -1,4 +1,4 @@
-# Replicant Register, microservices
+# Replicant Records, microservices
 
 #### Microservices application where you can check the all replicants produced by Tyrell Corporation and their respective occurrence records.
 

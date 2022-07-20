@@ -15,3 +15,5 @@
 [ ] Automated service for factory production <br>
 [ ] Middleware services <br>
 [ ] Message Broker
+[ ] Documentation
+[ ] Tests

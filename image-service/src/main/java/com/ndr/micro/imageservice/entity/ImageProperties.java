@@ -11,12 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+import org.springframework.data.domain.Page;
+
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "images")
+@Table(name = "images_properties")
+@Where(clause = "not is_deleted")
 @Data
+@NoArgsConstructor
 public class ImageProperties
 {
     @Id 
@@ -34,20 +40,85 @@ public class ImageProperties
     private Boolean isDeleted;
 
     @Column(nullable = false)
-    private LocalDateTime date;
+    private LocalDateTime postedOn;
+
+    //TODO:: Store all value of tika
+    @Column(nullable = false, length = 4)
+    private String extension;
+
+    @Column(nullable = false)
+    private String filename;
 
     public ImageProperties(UUID registryId)
     {
-        this.sequenceNumber = this.new SequenceNumber();
-        this.date = LocalDateTime.now();
+        this.sequenceNumber = new SequenceNumber();
+        this.postedOn = LocalDateTime.now();
         this.isDeleted = false;
         this.registryId = registryId;
     }
 
-    @Entity @Getter
-    public class SequenceNumber
+    public String normalizeName()
     {
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        String sequenceString = getSequenceNumberAsString();
+
+        if (sequenceString.length() < 15)
+        {
+            StringBuilder sb = new StringBuilder(sequenceString);
+
+            for (int i = 0; i < 15 - (sequenceString.length()); i++)
+            {
+                sb.insert(0, "0");
+            }
+            sequenceString = sb.toString();
+        }
+        return sequenceString;
+    }
+
+    public String buildFileName()
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append(filename);
+        sb.append(".");
+        sb.append(extension);
+
+        return sb.toString();
+    }
+
+    public String getSequenceNumberAsString()
+    {
+        return this.sequenceNumber.getNumber().toString();
+    }
+
+    public void generateFilename()
+    {
+        this.filename = this.normalizeName();
+    }
+
+    @Entity 
+    @Getter
+    @NoArgsConstructor
+    public static class SequenceNumber
+    {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long number;
+    }
+
+    @Data
+    public static class ImageResponse
+    {
+        private UUID id;
+        private UUID registryId;
+        private LocalDateTime postedOn;
+        private byte[] image;
+
+        public ImageResponse(ImageProperties imgProperties, byte[] image)
+        {
+            this.id = imgProperties.getId();
+            this.registryId = imgProperties.getRegistryId();
+            this.postedOn = imgProperties.postedOn;
+            this.image = image;
+        }
     }
 }

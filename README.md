@@ -1,6 +1,6 @@
 # Replicant Records, microservices
 
-#### Microservices application where you can check the all replicants produced by Tyrell Corporation and their respective occurrence records.
+#### Microservices application where you can check all replicants produced by Tyrell Corporation and their respective occurrence records.
 
 (The replicants treated here are part of the fictional universe of Blade Runner)
 
